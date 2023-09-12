@@ -1,30 +1,8 @@
-import {useState, useEffect} from 'react';
 import NoteList from './NoteList';
-const Home = () => {
-    const [notes, setNotes] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
+import useFetch from './useFetch';
 
-    useEffect(() => {
-        setTimeout(() => {
-            fetch('http://localhost:8000/notes')
-                .then(res => {
-                    if(!res.ok) { 
-                        throw Error('Could not fetch the data for that resource');
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    setNotes(data);
-                    setIsPending(false);
-                    setError(null);
-                })
-                .catch(err => {
-                    setIsPending(false);
-                    setError(err.message);
-                })
-        }, 400);
-    }, []);
+const Home = () => {
+    const {data: notes, isPending, error} = useFetch('http://localhost:8000/notes');
 
     return ( 
         <div className="home">

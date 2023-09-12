@@ -1,11 +1,13 @@
+import {Link} from 'react-router-dom';
+
 const Navbar = () => {
     return ( 
         <nav className="navbar">
             <h1>Notes</h1>
 
             <div className="links">
-                <a href="/">Home</a>
-                <a href="/create">New Note</a>
+                <Link to="/">Home</Link>
+                <Link to="/create">New Note</Link>
             </div>
         </nav>
      );

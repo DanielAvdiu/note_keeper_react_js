@@ -49,3 +49,7 @@
   margin-bottom: 8px;
   color: #f1356d;
 }
+
+.note-preview a{
+  text-decoration: none;
+}
