@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Create from './Create';
 import NoteList from './NoteList';
 import NoteDetails from './NoteDetails';
+import NotFound from './NotFound';
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
 
             <Route path="/notes/:id">
               <NoteDetails />
+            </Route>
+
+            <Route path="*">
+              <NotFound />
             </Route>
 
           </Switch>
