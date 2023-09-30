@@ -2,57 +2,45 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const Create = () => {
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [isPending, setIsPending] = useState('false');//for loading message
-    const history=useHistory();
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const history = useHistory();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const note = { title, body };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();//prevent page refresh
-        const note = { title, body };
+    fetch('http://localhost:8000/notes/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(note)
+    }).then(() => {
+      // history.go(-1);
+      history.push('/');
+    })
+  }
 
-        setIsPending(true);
-
-        fetch('http://localhost:8000/notes', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(note)
-        }).then(() => {
-            console.log('new note added');
-            setIsPending(false);
-           // history.go(-1);//go back to previous page
-           history.push('/');//go back to home page
-        });
-    }
-
-    return (
-        <div className="create">
-            <h2>Add a New Note</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Note title:</label>
-                <input
-                    type="text"
-                    required
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <label>Note body:</label>
-                <textarea
-                required
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                ></textarea>
-
-                {!isPending && <button>Add Note</button>}
-                {isPending && <button disabled>Adding Note...</button>}
-
-                <p>{title}</p>
-                <p>{body}</p>
-            </form>
-        </div>
-    );
+  return (
+    <div className="create">
+      <h2>Add a New Note</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Blog title:</label>
+        <input 
+          type="text" 
+          required 
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <label>Blog body:</label>
+        <textarea
+          required
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        ></textarea>
+        <button>Add Note</button>
+      </form>
+    </div>
+  );
 }
-
+ 
 export default Create;
